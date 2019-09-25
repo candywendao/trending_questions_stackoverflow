@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% for post in posts %}
+		<article>
+				<p>{{ post['title'] }}</p>
+				<p>{{ post['total_votes'] }}</p>
+		</article>
+	{% endfor %}
+{% endblock %}
