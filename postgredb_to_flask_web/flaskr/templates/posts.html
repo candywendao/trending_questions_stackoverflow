@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	{% for post in posts %}
-		<article>
-				<p>{{ post['title'] }}</p>
-				<p>{{ post['total_votes'] }}</p>
-		</article>
-	{% endfor %}
+
+<form method="post">
+<label for="tags">Tags</label>
+<input name="tags" id="tags" required>
+<select name="metrics">
+	<option value="total_votes">Total Votes</option>
+	<option value="7d_votes">7 Day Votes</option>
+	<option value="total_comments">Total Comments</option>
+	<option value="7d_comments">7 Day Comments</option>
+</select>
+<input type="submit" value="Submit">
+</form>
+
+{% for post in posts %}
+	<div class="column">
+	<div class="card">
+		<p class="post_title">Title: {{ post['_Title'] }}</p>
+		<p class="body">Votes: {{ post['total_votes'] }}</p>
+		<p class="body">Comments: {{ post['total_comments'] }}</p>
+		<p class="body">7 Day Votes: {{ post['num_votes_7d'] }}</p>
+		<p class="body">7 Day Comments: {{ post['nun_comments_7d'] }}</p>
+		<p class="body">Tags: {{ post['tags'] }}</p>
+	</div>
+	</div>
+{% endfor %}
+
 {% endblock %}
