@@ -8,9 +8,13 @@ bp = Blueprint('posts', __name__)
 
 metric_to_column = {
     "total_votes": Post.total_votes,
-    "7d_votes": Post.num_votes_7d,
     "total_comments": Post.total_comments,
-    "7d_comments": Post.nun_comments_7d
+    "7d_favorites": Post.num_favorites_7d,
+    "14d_favorites": Post.num_favorites_14d,
+    "28d_favorites": Post.num_favorites_28d,
+    "7d_comments": Post.num_comments_7d,
+    "14d_comments": Post.num_comments_14d,
+    "28d_comments": Post.num_comments_28d
 }
 
 @bp.route('/posts', methods=("GET", "POST"))
@@ -28,7 +32,7 @@ def get_popular_posts():
     ).filter(\
         post_column != None\
     ).order_by(post_column.desc()\
-    ).limit(10)
+    ).limit(6)
     return render_template('posts.html', posts=posts)
 
 @bp.route('/')
