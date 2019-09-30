@@ -41,19 +41,13 @@ The directory structure of the repo:
 -   Scheduler for daily-batch processing
 -   Flexible/Robust data schema design to incorporate dynamic business needs
 -   Generic platform for top-feed related products
- 
+
 ### Tech Stack Overview
 
-
+![Tech Stack](https://github.com/candywendao/trending_questions_stackoverflow/blob/master/pics/tech_stack_overview.png)
 
 ### Future Improvement
 
 - Enable data ingestion from multiple sources
 - Build pipelines to support ML-based feed/post recommendation
 - Streaming data support to satisfy real-time business needs
-
-
-
-
-
-
