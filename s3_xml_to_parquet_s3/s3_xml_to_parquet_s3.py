@@ -10,12 +10,11 @@ conf = SparkConf().set(\
     "/usr/local/spark/jars/spark-xml_2.11-0.6.0.jar,"+\
     "/usr/local/spark/jars/hadoop-aws-2.7.3.jar,"+\
     "/usr/local/spark/jars/aws-java-sdk-1.7.4.jar"\
+).setMaster(\
+    "spark://10.0.0.17:7077"\
+).setAppName(\
+   "read_xml_from_s3_write_parquet"\
 )
-#.setMaster(\
-#    "spark://10.0.0.17:7077"\
-#).setAppName(\
-#    "read_xml_from_s3_write_parquet"\
-#)
 
 sc = SparkContext(conf=conf)
 
@@ -24,9 +23,6 @@ spark = SparkSession.builder.getOrCreate()
 votes_file = "s3a://stack-overflow-datadump-xml/stackoverflow.com-Votes/Votes.xml"
 comments_file = "s3a://stack-overflow-datadump-xml/stackoverflow.com-Comments/Comments.xml"
 posts_file = "s3a://stack-overflow-datadump-xml/stackoverflow.com-Posts/Posts.xml"
-#votes_file = "s3a://stack-overflow-datadump-xml/3dprinting.stackexchange.com/Votes.xml"
-#comments_file = "s3a://stack-overflow-datadump-xml/3dprinting.stackexchange.com/Comments.xml"
-#posts_file = "s3a://stack-overflow-datadump-xml/3dprinting.stackexchange.com/Posts.xml"
 
 
 ### load xml files from s3 bucket
@@ -48,13 +44,13 @@ df_posts = spark.read \
     .options(rowTag='row') \
     .load(posts_file)
 
-### write parquet files partitionby date
-#df_votes.write.mode('append').partitionBy("date").parquet("s3a://stack-overflow-parquets-bydate/votes_3dprinting")
-#df_comments.write.mode('append').partitionBy("date").parquet("s3a://stack-overflow-parquets-bydate/comments_3dprinting")
+# ### write parquet files partitionby date and bulk upload using AWS CLI
+# df_votes.write.mode('append').partitionBy("date").parquet("/home/ubuntu/stackoverflow/data/votes")
+# df_comments.write.mode('append').partitionBy("date").parquet("/home/ubuntu/stackoverflow/data/comments")
+# df_posts.write.parquet("/home/ubuntu/stackoverflow/data/posts")
 
-#df_posts.write.parquet("s3a://stack-overflow-parquets-bydate/posts_3dprinting")
 
-
-df_votes.write.mode('append').partitionBy("date").parquet("/home/ubuntu/stackoverflow/data/votes")
-df_comments.write.mode('append').partitionBy("date").parquet("/home/ubuntu/stackoverflow/data/comments")
-df_posts.write.parquet("/home/ubuntu/stackoverflow/data/posts")
+### write parquet files and upload directly to s3
+df_posts.write.parquet("s3a://stack-overflow-parquets-bydate/posts_all")
+df_comments.write.mode('append').partitionBy("date").parquet("s3a://stack-overflow-parquets-bydate/comments")
+df_votes.write.mode('append').partitionBy("date").parquet("s3a://stack-overflow-parquets-bydate/votes")
