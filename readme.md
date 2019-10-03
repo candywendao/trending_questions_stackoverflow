@@ -2,7 +2,13 @@
 
 ### Project Overview
 
-- This project creates data pipelines using Stack Overflow’s content data dump to recommend contents such as most trending questions under various domains and builds a web application using Flask that displays popular questions that combine user-selected topic tags.
+
+This project creates data pipelines using Stack Overflow’s content data dump to recommend contents such as most trending questions under various domains and builds a web application using Flask that displays popular questions that combine user-selected topic tags.
+
+
+- [Slides]()
+- [Demo]()
+
 
 ### File Structure
 
