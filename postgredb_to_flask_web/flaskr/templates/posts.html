@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<h3 class ="instructions">Please enter tags and select from the drop down list: </h3>
 <form method="post">
 <label for="tags">Tags</label>
 <input type="text" name="tags" id="tags" required>
@@ -22,16 +22,18 @@
 {% for post in posts %}
 <div class ="column">
 	<div class="card">
-		<p class="post_title">Title: {{ post['_Title'] }}</p>
-		<p class="body">Tags: {{ post['tags'] }}</p>
-		<!--
-		<p class="body">7 Day Favorites: {{ post['num_favorites_7d'] }}</p>
-		<p class="body">14 Day Favorites: {{ post['num_favorites_14d'] }}</p>
-		<p class="body">28 Day Favorites: {{ post['num_favorites_28d'] }}</p>
-		<p class="body">7 Day Comments: {{ post['num_comments_7d'] }}</p>
-		<p class="body">14 Day Comments: {{ post['num_comments_14d'] }}</p>
-		<p class="body">28 Day Comments: {{ post['num_comments_28d'] }}</p>
-		-->
+		<div class ="cardcontent">
+				<p class="post_title">Title: {{ post['_Title'] }}</p>
+				<p class="body">Tags: {{ post['tags'] }}</p>
+				<!--
+				<p class="body">7 Day Favorites: {{ post['num_favorites_7d'] }}</p>
+				<p class="body">14 Day Favorites: {{ post['num_favorites_14d'] }}</p>
+				<p class="body">28 Day Favorites: {{ post['num_favorites_28d'] }}</p>
+				<p class="body">7 Day Comments: {{ post['num_comments_7d'] }}</p>
+				<p class="body">14 Day Comments: {{ post['num_comments_14d'] }}</p>
+				<p class="body">28 Day Comments: {{ post['num_comments_28d'] }}</p>
+				-->
+		</div>
 	</div>
 </div>
 {% endfor %}
