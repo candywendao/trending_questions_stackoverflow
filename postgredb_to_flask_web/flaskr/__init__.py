@@ -28,6 +28,8 @@ def create_app(test_config=None):
         url=POSTGRES_URL,
         db=POSTGRES_DB)
 
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -48,12 +50,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    # # a simple page that says hello
+    # @app.route('/hello')
+    # def hello():
+    #     return 'Hello, World!'
 
     from . import posts
     app.register_blueprint(posts.bp)
-    app.add_url_rule('/', endpoint='index')
+    #app.add_url_rule('/', endpoint='index')
     return app

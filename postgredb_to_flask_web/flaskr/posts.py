@@ -3,6 +3,7 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 from flaskr.db import Post
+from sqlalchemy import and_, or_
 
 bp = Blueprint('posts', __name__)
 
@@ -24,15 +25,20 @@ def get_popular_posts():
 
 
     tags = request.form["tags"]
+    if tags is not None:
+        tags = tags.lower().split()
+    else:
+        tags = []
+
     metrics = request.form["metrics"]
     post_column = metric_to_column[metrics]
 
-    posts = Post.query.filter(Post.tags.contains(\
-        "{" + "{0}".format(tags) + "}", autoescape=True)\
-    ).filter(\
+    posts = Post.query.filter(and_(*[Post.tags.contains(\
+        "{" + "{0}".format(tag) + "}", autoescape=True) for tag in tags
+    ])).filter(\
         post_column != None\
     ).order_by(post_column.desc()\
-    ).limit(6)
+    ).limit(10)
     return render_template('posts.html', posts=posts)
 
 @bp.route('/')
